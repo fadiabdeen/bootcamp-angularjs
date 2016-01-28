@@ -21,6 +21,7 @@
     "bootstrap": "^3.3.6",
     "angular-route": "^1.4.9",
     "angular-datatables": "^0.5.3",
-    "angular-resource": "^1.4.9"
+    "angular-resource": "^1.4.9",
+    "moment": "^2.11.1"
   }
 }
