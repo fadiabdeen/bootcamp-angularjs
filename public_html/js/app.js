@@ -9,6 +9,9 @@ app.config(function ($routeProvider) {
         controller: 'ReportController'
     }).when('/', {
         templateUrl: 'views/dashboard.html'
+
+    }).when('/student/:id', {
+        templateUrl: 'views/student.html',
     }).otherwise({
     });
 });
@@ -23,16 +26,54 @@ app.controller("MainController", function ($scope) {
 
 });
 
-app.controller("ReportController", function ($scope,$http) {
+app.controller("StudentController", function ($scope, $routeParams) {
+    $scope.templateUrl = 'templates/student.html';
+    $scope.id = $routeParams.id;
+});
+
+app.controller("ReportController", function ($scope, $http) {
 
     $scope.name = "Report Page";
 
+    $http.get("data.json").success(function (data) {
+        $scope.students = data;
+    });
+
     $scope.test = function () {
-        
-        $http.get("data.json").success(function(data){
-            $scope.name=data.name;
-        });
+
+
     };
 
+
+
+
+
+});
+
+
+app.service('MathService', function () {
+
+    this.average = function (total, count) {
+        return total / count;
+    };
+
+    this.dateFormat = function (data, type, full, meta) {
+        return moment(data).format('llll');
+    };
+});
+
+
+app.filter('momentFormat', function () {
+    return function (dateString, format) {
+//        return moment(dateString).format(format);
+        return dateString + ".00";
+    };
+});
+
+
+app.directive('footer', function () {
+    return {
+        templateUrl: 'views/footer.html'
+    };
 });
 
